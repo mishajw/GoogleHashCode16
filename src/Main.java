@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  */
 public class Main {
 
-	private static final String fileName = "res/mother_of_all_warehouses";
+	private static final String fileName = "res/redundancy";
 
 	private int rows, columns, droneAmount, turns, maxPayload;
 	private int warehouseAmount, productAmount;
@@ -100,10 +100,22 @@ public class Main {
 	}
 
 	private void generateDrones() {
+		int totalProducts = warehouses.stream().map(w ->
+				w.productAmounts
+						.stream()
+						.mapToInt(Integer::intValue)
+						.sum())
+				.mapToInt(Integer::intValue)
+				.sum();
+
 		Warehouse start = warehouses.get(0);
 
 		for (int i = 0; i < droneAmount; i++) {
-			this.drones.add(new Drone(start, maxPayload, i, this));
+			int index = (int) Math.floor((((double) i) / (((double) droneAmount))) * warehouseAmount);
+			System.out.println(index);
+			Warehouse w = warehouses.get(index);
+
+			this.drones.add(new Drone(w, maxPayload, i, this));
 		}
 	}
 
