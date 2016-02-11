@@ -109,7 +109,7 @@ public class Drone extends Locatable {
 	private int getHeuristic(Order o) {
 		double dist = Helper.eulDist(this, o);
 
-		double total = Math.pow(1 / ((double) o.total), 0.7);
+		double total = Math.pow(1 / ((double) o.total), 8);
 
 		return (int) (dist * total);
 	}
