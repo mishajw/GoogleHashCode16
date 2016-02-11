@@ -20,6 +20,7 @@ public class Main {
 	private List<Product> products;
 	private List<Warehouse> warehouses;
 	private List<Order> orders;
+	private List<Drone> drones;
 
 	public static void main(String[] args) {
 		new Main();
@@ -64,6 +65,16 @@ public class Main {
 					Integer.parseInt(locationSplit[0]),
 					orderProducts
 			));
+		}
+
+		generateDrones();
+	}
+
+	private void generateDrones() {
+		Warehouse start = warehouses.get(0);
+
+		for (int i = 0; i < droneAmount; i++) {
+			this.drones.add(new Drone(start.x, start.y, maxPayload));
 		}
 	}
 
