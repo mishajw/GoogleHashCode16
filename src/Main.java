@@ -82,7 +82,7 @@ public class Main {
 		String[] split = weightString.split(" ");
 
 		for (int i = 0; i < amount; i++) {
-			products.add(new Product(Integer.parseInt(split[i])));
+			products.add(new Product(i, Integer.parseInt(split[i])));
 		}
 	}
 
