@@ -93,6 +93,8 @@ public class Drone extends Locatable {
 		if (toCheck.isEmpty()) {
 			return null;
 		} else {
+			this.x = toCheck.get(0).x;
+			this.y = toCheck.get(0).y;
 			return toCheck.get(0);
 		}
 	}
