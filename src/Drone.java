@@ -18,5 +18,8 @@ public class Drone {
 		carrying = new ArrayList<>();
 	}
 
-
+	@Override
+	public String toString() {
+		return "Drone(" + x + ", " + y + " - " + carrying.size() + ")";
+	}
 }
