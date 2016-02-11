@@ -7,4 +7,9 @@ public class Product {
 	public Product(int weight) {
 		this.weight = weight;
 	}
+
+	@Override
+	public String toString() {
+		return "Product(" + weight + ")";
+	}
 }

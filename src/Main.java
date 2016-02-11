@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -64,8 +65,6 @@ public class Main {
 					orderProducts
 			));
 		}
-
-		System.out.println(orders.size());
 	}
 
 	private void parseInitial(String s) {
@@ -97,5 +96,11 @@ public class Main {
 		}
 
 		return null;
+	}
+
+	private void printDetails() {
+		products.stream().forEach(x -> System.out.println(x));
+		warehouses.stream().forEach(x -> System.out.println(x));
+		orders.stream().forEach(x -> System.out.println(x));
 	}
 }

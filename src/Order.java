@@ -12,4 +12,9 @@ public class Order {
 		this.y = y;
 		this.products = products;
 	}
+
+	@Override
+	public String toString() {
+		return "Order(" + x + ", " + y + ", " + products.size() + ")";
+	}
 }

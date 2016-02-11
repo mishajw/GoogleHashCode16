@@ -27,4 +27,9 @@ public class Warehouse {
 				.map(Integer::parseInt)
 				.collect(Collectors.toList());
 	}
+
+	@Override
+	public String toString() {
+		return "Warehouse(" + x + ", " + y + ", " + productAmounts.size() + ")";
+	}
 }
