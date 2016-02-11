@@ -14,6 +14,8 @@ public class Drone extends Locatable {
 	List<String> commands = new ArrayList<>();
 	List<String> tempReport = new ArrayList<>();
 
+	Order currOrder = null;
+
 	List<Product> carrying;
 	Warehouse warehouse;
 
@@ -38,9 +40,10 @@ public class Drone extends Locatable {
 		Order bestOrder = bestOrderToDo(orders);
 
 		if (bestOrder != null) {
-			//todo remove from main
+			this.currOrder = bestOrder;
 			this.env.orders.remove(bestOrder);
 			this.warehouse.productAmounts.set(bestOrder.product.index, this.warehouse.productAmounts.get(bestOrder.product.index) - 1);
+			bestOrder.total --;
 			this.carrying.add(bestOrder.product);
 			this.currentTimeLeft = Helper.eulDist(this, bestOrder);
 			tempReport.add(id + " D " + bestOrder.customer + " " + bestOrder.product.index + " " + 1);
@@ -67,8 +70,10 @@ public class Drone extends Locatable {
 	private void returnToWarehouse(List<Warehouse> warehouses) {
 		processString();
 
+		Locatable curPos = this.currOrder == null ? this : this.currOrder;
+
 		this.warehouse = warehouses.stream()
-				.sorted((o1, o2) -> (int) (Helper.eulDist(this, o1) - Helper.eulDist(this, o2)))
+				.sorted((o1, o2) -> (int) (Helper.eulDist(curPos, o1) - Helper.eulDist(curPos, o2)))
 				.collect(Collectors.toList())
 				.get(0);
 
@@ -82,12 +87,14 @@ public class Drone extends Locatable {
 				.stream()
 				.filter(o -> warehouse.contains(o.product))
 				.filter(o -> o.product.weight < weightRemaining())
-				.sorted((o1, o2) -> (int) (Helper.eulDist(this, o1) - Helper.eulDist(this, o2)))
+				.sorted((o1, o2) -> getHeuristic(o1) - getHeuristic(o2))
 				.collect(Collectors.toList());
 
-		for (Order o : orders) {
-			//System.out.println(o);
-		}
+//		for (Order o : toCheck) {
+//			System.out.println(Helper.eulDist(this, o));
+//		}
+//
+//		System.out.println("\n\n\n");
 
 
 		if (toCheck.isEmpty()) {
@@ -97,6 +104,14 @@ public class Drone extends Locatable {
 			this.y = toCheck.get(0).y;
 			return toCheck.get(0);
 		}
+	}
+
+	private int getHeuristic(Order o) {
+		double dist = Helper.eulDist(this, o);
+
+		double total = Math.pow(1 / ((double) o.total), 0.7);
+
+		return (int) (dist * total);
 	}
 
 	private void processString() {

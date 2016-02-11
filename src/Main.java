@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  */
 public class Main {
 
-	private static final String fileName = "res/redundancy";
+//	private static final String fileName = "res/redundancy";
 
 	private int rows, columns, droneAmount, turns, maxPayload;
 	private int warehouseAmount, productAmount;
@@ -23,16 +23,18 @@ public class Main {
 	private List<Drone> drones;
 
 	public static void main(String[] args) {
-		new Main();
+		new Main("res/busy_day");
+		new Main("res/mother_of_all_warehouses");
+		new Main("res/redundancy");
 	}
 
-	public Main() {
+	public Main(String fileName) {
 		this.products = new ArrayList<>();
 		this.warehouses = new ArrayList<>();
 		this.orders = new ArrayList<>();
 		this.drones = new ArrayList<>();
 
-		List<String> lines = getLines();
+		List<String> lines = getLines(fileName);
 
 		int count = 0;
 
@@ -60,7 +62,8 @@ public class Main {
 						i,
 						Integer.parseInt(locationSplit[0]),
 						Integer.parseInt(locationSplit[0]),
-						products.get(index)
+						products.get(index),
+						products.size()
 				));
 			}
 		}
@@ -138,7 +141,7 @@ public class Main {
 		}
 	}
 
-	public List<String> getLines() {
+	public List<String> getLines(String fileName) {
 		try {
 			Stream<String> stream = Files.lines(Paths.get(fileName + ".in"));
 
