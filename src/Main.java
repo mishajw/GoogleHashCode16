@@ -17,9 +17,9 @@ public class Main {
 	private int rows, columns, droneAmount, turns, maxPayload;
 	private int warehouseAmount, productAmount;
 
-	private List<Product> products;
+	static private List<Product> products;
 	private List<Warehouse> warehouses;
-	private List<Order> orders;
+	List<Order> orders;
 	private List<Drone> drones;
 
 	public static void main(String[] args) {
@@ -42,7 +42,7 @@ public class Main {
 		warehouseAmount = Integer.parseInt(lines.get(count++));
 
 		for (int i = 0; i < warehouseAmount; i++) {
-			warehouses.add(new Warehouse(lines.get(count++), lines.get(count++)));
+			warehouses.add(new Warehouse(i, lines.get(count++), lines.get(count++)));
 		}
 
 		int orderAmount = Integer.parseInt(lines.get(count++));
@@ -52,30 +52,58 @@ public class Main {
 
 			int orderProductsAmount = Integer.parseInt(lines.get(count++));
 
-			List<Product> orderProducts = new ArrayList<>();
-
 			String[] productSplit = lines.get(count++).split(" ");
 
-			for (String s : productSplit) {
-				int index = Integer.parseInt(s);
-				orderProducts.add(products.get(index));
+			for (int j = 0; j < orderProductsAmount; j++) {
+				int index = Integer.parseInt(productSplit[j]);
+				orders.add(new Order(
+						i,
+						Integer.parseInt(locationSplit[0]),
+						Integer.parseInt(locationSplit[0]),
+						products.get(index)
+				));
 			}
-
-			orders.add(new Order(
-					Integer.parseInt(locationSplit[0]),
-					Integer.parseInt(locationSplit[0]),
-					orderProducts
-			));
 		}
 
 		generateDrones();
+
+		System.out.println(turns);
+
+		for (int i = 0; i < turns; i++) {
+			if (i % 100 == 0) {
+				System.out.println(i);
+			}
+
+			for (Drone d : drones) {
+				d.step(orders, warehouses);
+			}
+		}
+
+		int instructionsAmount = 0;
+		String instructions = "";
+
+		for (Drone d : drones) {
+//			System.out.println(d);
+			for (String s : d.commands) {
+				instructions += s + "\n";
+				instructionsAmount ++;
+			}
+		}
+
+		instructions = instructionsAmount + "\n" + instructions;
+
+		try {
+			Files.write(Paths.get("./out.txt"), instructions.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void generateDrones() {
 		Warehouse start = warehouses.get(0);
 
 		for (int i = 0; i < droneAmount; i++) {
-			this.drones.add(new Drone(start.x, start.y, maxPayload));
+			this.drones.add(new Drone(start, maxPayload, i, this));
 		}
 	}
 

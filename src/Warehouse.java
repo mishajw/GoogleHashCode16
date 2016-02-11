@@ -7,16 +7,14 @@ import java.util.stream.Collectors;
  * Created by misha on 11/02/16.
  */
 public class Warehouse extends Locatable {
+	int id;
 	int x, y;
 	List<Integer> productAmounts;
 
-	public Warehouse(int x, int y, List<Integer> productAmounts) {
-		super(x, y);
-		this.productAmounts = productAmounts;
-	}
-
-	public Warehouse(String location, String amounts) {
+	public Warehouse(int id, String location, String amounts) {
 		super(Integer.parseInt(location.split(" ")[0]), Integer.parseInt(location.split(" ")[1]));
+
+		this.id = id;
 
 		String[] amountsSplit = amounts.split(" ");
 		productAmounts = Arrays.asList(amountsSplit)
@@ -25,6 +23,9 @@ public class Warehouse extends Locatable {
 				.collect(Collectors.toList());
 	}
 
+	public boolean contains(Product p) {
+		return productAmounts.get(p.index) > 0;
+	}
 
 	@Override
 	public String toString(){
