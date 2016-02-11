@@ -30,6 +30,7 @@ public class Main {
 		this.products = new ArrayList<>();
 		this.warehouses = new ArrayList<>();
 		this.orders = new ArrayList<>();
+		this.drones = new ArrayList<>();
 
 		List<String> lines = getLines();
 

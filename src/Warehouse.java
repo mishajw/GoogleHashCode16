@@ -6,20 +6,17 @@ import java.util.stream.Collectors;
 /**
  * Created by misha on 11/02/16.
  */
-public class Warehouse {
+public class Warehouse extends Locatable {
 	int x, y;
 	List<Integer> productAmounts;
 
 	public Warehouse(int x, int y, List<Integer> productAmounts) {
-		this.x = x;
-		this.y = y;
+		super(x, y);
 		this.productAmounts = productAmounts;
 	}
 
 	public Warehouse(String location, String amounts) {
-		String[] locationSplit = location.split(" ");
-		this.x = Integer.parseInt(locationSplit[0]);
-		this.y = Integer.parseInt(locationSplit[1]);
+		super(Integer.parseInt(location.split(" ")[0]), Integer.parseInt(location.split(" ")[1]));
 
 		String[] amountsSplit = amounts.split(" ");
 		productAmounts = Arrays.asList(amountsSplit)
