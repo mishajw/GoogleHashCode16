@@ -28,8 +28,16 @@ public class Warehouse {
 				.collect(Collectors.toList());
 	}
 
+
 	@Override
-	public String toString() {
-		return "Warehouse(" + x + ", " + y + ", " + productAmounts.size() + ")";
+	public String toString(){
+		String s =  "([" + x + "," + y + "] - Product amounts: ";
+
+		for (Integer i: productAmounts ) {
+			s += i+ ",";
+		}
+		s = s.substring(0,s.length()-1);
+		s += ")";
+		return s;
 	}
 }
