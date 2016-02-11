@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  */
 public class Main {
 
-	private static final String fileName = "res/busy_day.in";
+	private static final String fileName = "res/mother_of_all_warehouses";
 
 	private int rows, columns, droneAmount, turns, maxPayload;
 	private int warehouseAmount, productAmount;
@@ -93,7 +93,7 @@ public class Main {
 		instructions = instructionsAmount + "\n" + instructions;
 
 		try {
-			Files.write(Paths.get("./out.txt"), instructions.getBytes());
+			Files.write(Paths.get(fileName + ".out"), instructions.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -128,7 +128,7 @@ public class Main {
 
 	public List<String> getLines() {
 		try {
-			Stream<String> stream = Files.lines(Paths.get(fileName));
+			Stream<String> stream = Files.lines(Paths.get(fileName + ".in"));
 
 			return stream.collect(Collectors.toList());
 		} catch (IOException e) {

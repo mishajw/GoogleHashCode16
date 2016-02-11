@@ -72,7 +72,7 @@ public class Drone extends Locatable {
 				.collect(Collectors.toList())
 				.get(0);
 
-		this.currentTimeLeft += Helper.eulDist(this, warehouse);
+		this.currentTimeLeft = Helper.eulDist(this, warehouse);
 
 		this.carrying.clear();
 	}
