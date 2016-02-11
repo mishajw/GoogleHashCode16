@@ -2,9 +2,10 @@
  * Created by misha on 11/02/16.
  */
 public class Product {
-	final int weight;
+	final int index, weight;
 
-	public Product(int weight) {
+	public Product(int index, int weight) {
+		this.index = index;
 		this.weight = weight;
 	}
 

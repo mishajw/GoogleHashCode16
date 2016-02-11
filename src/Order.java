@@ -3,13 +3,11 @@ import java.util.List;
 /**
  * Created by misha on 11/02/16.
  */
-public class Order {
+public class Order extends Locatable {
 	List<Product> products;
-	int x, y;
 
 	public Order(int x, int y, List<Product> products) {
-		this.x = x;
-		this.y = y;
+		super(x, y);
 		this.products = products;
 	}
 

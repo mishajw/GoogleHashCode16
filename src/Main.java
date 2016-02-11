@@ -20,6 +20,7 @@ public class Main {
 	private List<Product> products;
 	private List<Warehouse> warehouses;
 	private List<Order> orders;
+	private List<Drone> drones;
 
 	public static void main(String[] args) {
 		new Main();
@@ -29,6 +30,7 @@ public class Main {
 		this.products = new ArrayList<>();
 		this.warehouses = new ArrayList<>();
 		this.orders = new ArrayList<>();
+		this.drones = new ArrayList<>();
 
 		List<String> lines = getLines();
 
@@ -65,6 +67,16 @@ public class Main {
 					orderProducts
 			));
 		}
+
+		generateDrones();
+	}
+
+	private void generateDrones() {
+		Warehouse start = warehouses.get(0);
+
+		for (int i = 0; i < droneAmount; i++) {
+			this.drones.add(new Drone(start.x, start.y, maxPayload));
+		}
 	}
 
 	private void parseInitial(String s) {
@@ -82,7 +94,7 @@ public class Main {
 		String[] split = weightString.split(" ");
 
 		for (int i = 0; i < amount; i++) {
-			products.add(new Product(Integer.parseInt(split[i])));
+			products.add(new Product(i, Integer.parseInt(split[i])));
 		}
 	}
 
